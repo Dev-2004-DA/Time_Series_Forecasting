@@ -80,7 +80,7 @@ def input_date1(date):
 
 
 #_______INPUT FOR USING SARIMAX MODEL_______
-st.sidebar.header("Input Date for using SARIMAX Model")
+st.sidebar.header("To get forecasting using SARIMAX Model")
 date0 = st.sidebar.date_input("Input Date ",
                               value=pd.to_datetime('2025-10-22'),
                               min_value=pd.to_datetime('2025-10-22'),
@@ -90,7 +90,7 @@ date0 = st.sidebar.date_input("Input Date ",
 st.header("Note: The prediction for the date will be based on the previous data, so the input date should be within the range of the data used for building the model. For SARIMAX model, the input date should be between 2025-10-22 and 2026-03-13. For ML model, the input date should be between 2026-01-07 and 2026-03-13.")
 st.subheader("Please select the date for which you want to predict the stock price using the models from the sidebar. The prediction will be displayed below along with the RMSE for SARIMAX model and feature importance for ML model.")   
 #_______INPUT FOR USING ML MODEL________
-st.sidebar.header("Input Date for using ML Model")
+st.sidebar.header("To get percentage price change in one day using ML Model")
 date1 = st.sidebar.date_input("Input Date ",
                               min_value=pd.to_datetime('2026-01-07'),
                               value=pd.to_datetime('2026-02-22'),
