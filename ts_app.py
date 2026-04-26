@@ -32,7 +32,7 @@ st.subheader("""I have built to separate model based on Traditional Time Series 
 df= pd.read_csv(r"google_2year_data (1).xls")
 df = df.drop(index=[0,1],axis=0).reset_index(drop=True)
 df['Date']= pd.to_datetime(df['Price'])
-df = df.drop(columns='Price',axis=1)
+df = df.drop(columns='Price')
 df['Close'] = pd.to_numeric(df['Close'])
 
 
