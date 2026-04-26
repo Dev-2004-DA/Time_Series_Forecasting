@@ -45,38 +45,33 @@ import pandas as pd
 import numpy as np
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-ts_data = pd.read_csv("Traditional_Model_Data_for_Prediction").drop(columns=["Unnamed: 0"])
-ts_ml_data = pd.read_csv("ML_pred_data").drop(columns=["Unnamed: 0"])
+ts_data = pd.read_csv("Traditional_Model_Data_for_Prediction.csv").drop(columns=["Unnamed: 0"])
+ts_ml_data = pd.read_csv("ML_pred_data.csv").drop(columns=["Unnamed: 0"])
 
-ts_data['Date'] = pd.to_datetime(ts_data['Date'])
-ts_ml_data['Date'] = pd.to_datetime(ts_ml_data['Date'])
-
+ts_data['Date']    = pd.to_datetime(ts_data['Date']).dt.normalize()   
+ts_ml_data['Date'] = pd.to_datetime(ts_ml_data['Date']).dt.normalize() 
 # SARIMA Prediction
 def input_date0(date):
-
-    date = pd.to_datetime(date)
+    date = pd.to_datetime(date).normalize()   # ADD .normalize()
     
-    exog = ts_data[ts_data['Date'] <= pd.to_datetime(date)].iloc[:,2:]
-
+    exog = ts_data[ts_data['Date'] <= date].iloc[:, 2:]
     exogen = np.array(exog)
-
     
-    prediction  = sarima_model.forecast(steps = int(ts_data[ts_data['Date'] == pd.to_datetime(date)].index[0] + 1),
-                           exog = exogen)
+    prediction = sarima_model.forecast(
+        steps = int(ts_data[ts_data['Date'] == date].index[0] + 1),
+        exog  = exogen
+    )
     return np.array(prediction.tail(1))[0]
 
-#ML Prediciton
+# ML Prediction
 def input_date1(date):
-
-    date = pd.to_datetime(date)
+    date = pd.to_datetime(date).normalize()   # ADD .normalize()
     
-    exog = ts_ml_data[ts_ml_data['Date'] == pd.to_datetime(date)].iloc[:,2:]
+    exog = ts_ml_data[ts_ml_data['Date'] == date].iloc[:, 2:]
     exogen = np.array(exog)
-
     
-    prediction  = rf_model.predict(exogen)
-    return prediction[0],exog.reset_index(drop= True).T
-
+    prediction = rf_model.predict(exogen)
+    return prediction[0], exog.reset_index(drop=True).T
 
 
 #_______INPUT FOR USING SARIMAX MODEL_______
