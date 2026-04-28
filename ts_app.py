@@ -44,7 +44,7 @@ import pandas as pd
 import numpy as np
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-ts_data = pd.read_csv("Traditional_Model_Data_for_Prediction.csv").drop(columns=["Unnamed: 0"])
+ts_data = pd.read_csv("Traditional_Model_Data_for_Prediction").drop(columns=["Unnamed: 0"])
 ts_ml_data = pd.read_csv("ML_pred_data.csv").drop(columns=["Unnamed: 0"])
 
 ts_data['Date'] = pd.to_datetime(ts_data['Date'])
